@@ -1,7 +1,8 @@
-package com.back.end.security.authentication;
+package com.back.end.config.security.authentication;
 
 import com.back.end.service.login.LoginSrv;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,7 +26,14 @@ public class RestApiAuthenticationProvider implements AuthenticationProvider {
 		String login = (String) authentication.getPrincipal();
 		String password = (String) authentication.getCredentials();
 
-		AuthenticationBean authenticationBean = loginSrv.logMeIn(login, password);
+		AuthenticationBean authenticationBean;
+
+		try {
+			authenticationBean = loginSrv.logMeIn(login, password);
+		} catch (Exception e) {
+			throw new AccountStatusException("Authantification failed") {};
+		}
+
 
 		if (authenticationBean.isLocked()) {
 			throw new LockedException("You account has been locked.");

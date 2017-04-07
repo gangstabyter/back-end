@@ -1,4 +1,4 @@
-package com.back.end.security.authentication;
+package com.back.end.config.security.authentication;
 
 import com.google.common.collect.Lists;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +10,8 @@ import java.util.List;
  */
 public class AuthenticationBean {
 	private String login;
+	private String firstName;
+	private String lastName;
 	private String password;
 	private boolean isLocked;
 
@@ -50,5 +52,21 @@ public class AuthenticationBean {
 
 	public void addAuthority(GrantedAuthority authority) {
 		this.authorities.add(authority);
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 }

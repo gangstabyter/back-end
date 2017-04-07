@@ -40,7 +40,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
+		BasicAuthenticationFilter basicAuthenticationFilter
+				= new BasicAuthenticationFilter(authenticationManager, authenticationEntryPoint);
+
 		http.csrf().disable()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+				.addFilter(basicAuthenticationFilter)
+				.authenticationProvider(authenticationProvider)
+				.exceptionHandling().accessDeniedHandler(accessDeniedHandler).authenticationEntryPoint(authenticationEntryPoint)
+				.and()
+				.authorizeRequests().antMatchers("/*/test1").hasRole("ADMIN")
+				.and()
+				.authorizeRequests().antMatchers("/*/test2").hasRole("USER")
+				.and()
+				.authorizeRequests().antMatchers("/*/test3").hasAnyRole("USER", "ADMIN")
+				.and()
+				.authorizeRequests().antMatchers("/*/login").permitAll();
 	}
 }

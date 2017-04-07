@@ -1,4 +1,4 @@
-package com.back.end.security.authentication;
+package com.back.end.config.security.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;

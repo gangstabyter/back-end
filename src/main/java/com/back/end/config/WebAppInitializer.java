@@ -1,10 +1,10 @@
 package com.back.end.config;
 
-import com.back.end.filter.zip.GZIPFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
+import javax.servlet.ServletRegistration;
 
 /**
  * Created by dmitry on 28.03.2017.
@@ -23,6 +23,12 @@ public class WebAppInitializer  extends AbstractAnnotationConfigDispatcherServle
 	@Override
 	protected String[] getServletMappings() {
 		return new String[] { "/" };
+	}
+
+	@Override
+	protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+		registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
+		super.customizeRegistration(registration);
 	}
 
 	@Override

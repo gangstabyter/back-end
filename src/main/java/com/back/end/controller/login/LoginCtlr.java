@@ -1,7 +1,7 @@
 package com.back.end.controller.login;
 
-import com.back.end.model.login.LoginResultBean;
-import com.back.end.security.authentication.AuthenticationBean;
+import com.back.end.model.dto.login.LoginResultBean;
+import com.back.end.config.security.authentication.AuthenticationBean;
 import com.back.end.service.login.LoginSrv;
 import com.back.end.util.RestURLs;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class LoginCtlr {
 			AuthenticationBean authenticationBean = loginSrv.logMeIn(login, password);
 			result = LoginResultBean.from(authenticationBean);
 		} catch (Exception e) {
-			result = LoginResultBean.from(new AuthenticationBean());
+			result = LoginResultBean.from(null);
 		}
 		return result;
 	}
