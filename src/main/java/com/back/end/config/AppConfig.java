@@ -22,6 +22,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ComponentScan(basePackages={"com.back.end"},
 		excludeFilters=@ComponentScan.Filter(type= FilterType.REGEX, pattern={"com.back.end.controller"}))
 public class AppConfig {
+
 	@Bean
 	public CacheManager cacheManager() {
 		return new ConcurrentMapCacheManager();
