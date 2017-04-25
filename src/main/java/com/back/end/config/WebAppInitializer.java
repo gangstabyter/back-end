@@ -1,5 +1,6 @@
 package com.back.end.config;
 
+import com.back.end.util.filter.CORSFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

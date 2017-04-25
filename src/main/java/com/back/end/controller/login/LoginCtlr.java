@@ -6,6 +6,7 @@ import com.back.end.service.login.LoginSrv;
 import com.back.end.util.RestURLs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,13 +21,27 @@ public class LoginCtlr {
 	@Autowired
 	private LoginSrv loginSrv;
 
-	@RequestMapping(value = RestURLs.LOGIN, method = RequestMethod.POST)
+	@RequestMapping(value = RestURLs.LOGIN_URL_ENCODED, method = RequestMethod.POST)
 	@ResponseBody
-	public Object login(@RequestParam String login, @RequestParam String password) throws Exception {
+	public LoginResultBean loginUrlEncoded(@RequestParam String login, @RequestParam String password) throws Exception {
 
 		LoginResultBean result;
 		try {
 			AuthenticationBean authenticationBean = loginSrv.logMeIn(login, password);
+			result = LoginResultBean.from(authenticationBean);
+		} catch (Exception e) {
+			result = LoginResultBean.from(null);
+		}
+		return result;
+	}
+
+	@RequestMapping(value = RestURLs.LOGIN_JSON, method = RequestMethod.POST)
+	@ResponseBody
+	public LoginResultBean loginJSON(@RequestBody LoginObj loginObj) throws Exception {
+
+		LoginResultBean result;
+		try {
+			AuthenticationBean authenticationBean = loginSrv.logMeIn(loginObj.getLogin(), loginObj.getPassword());
 			result = LoginResultBean.from(authenticationBean);
 		} catch (Exception e) {
 			result = LoginResultBean.from(null);

@@ -10,6 +10,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.format.support.FormattingConversionService;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -22,6 +23,11 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Autowired
 	private FormattingConversionService mvcConversionService;
+
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/**");
+	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
